@@ -21,6 +21,7 @@ public class ConfigFile {
     private static final String internalFileName = ".wakatime-internal.cfg";
     private static String cachedConfigFile = null;
     private static String _api_key = "";
+    private static String _main_branches = "";
 
     private static String getConfigFilePath(boolean internal) {
         if (ConfigFile.cachedConfigFile == null) {
@@ -172,4 +173,8 @@ public class ConfigFile {
         return s.replace("\0", "");
     }
 
+    public static void setMainBranches(String mainBranches) {
+        set("settings", "main_branches", false, mainBranches);
+        ConfigFile._main_branches = mainBranches;
+    }
 }

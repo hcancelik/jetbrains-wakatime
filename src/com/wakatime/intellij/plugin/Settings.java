@@ -27,6 +27,8 @@ public class Settings extends DialogWrapper {
     private final JCheckBox debug;
     private final JLabel statusBarLabel;
     private final JCheckBox statusBar;
+    private final JLabel mainBranchesLabel;
+    private final JTextField mainBranches;
 
     public Settings(@Nullable Project project) {
         super(project, true);
@@ -35,13 +37,13 @@ public class Settings extends DialogWrapper {
         panel = new JPanel();
         panel.setLayout(new GridLayout(0,2));
 
-        apiKeyLabel = new JLabel("API key:", JLabel.CENTER);
+        apiKeyLabel = new JLabel("API key:", JLabel.LEFT);
         panel.add(apiKeyLabel);
         apiKey = new JTextField(36);
         apiKey.setText(ConfigFile.getApiKey());
         panel.add(apiKey);
 
-        proxyLabel = new JLabel("Proxy:", JLabel.CENTER);
+        proxyLabel = new JLabel("Proxy:", JLabel.LEFT);
         panel.add(proxyLabel);
         proxy = new JTextField();
         String p = ConfigFile.get("settings", "proxy", false);
@@ -49,19 +51,27 @@ public class Settings extends DialogWrapper {
         proxy.setText(p);
         panel.add(proxy);
 
-        statusBarLabel = new JLabel("Show WakaTime in status bar:", JLabel.CENTER);
+        statusBarLabel = new JLabel("Show WakaTime in status bar:", JLabel.LEFT);
         panel.add(statusBarLabel);
         String statusBarValue = ConfigFile.get("settings", "status_bar_enabled", false);
         statusBar = new JCheckBox();
         statusBar.setSelected(statusBarValue == null || !statusBarValue.trim().toLowerCase().equals("false"));
         panel.add(statusBar);
 
-        debugLabel = new JLabel("Debug:", JLabel.CENTER);
+        debugLabel = new JLabel("Debug:", JLabel.LEFT);
         panel.add(debugLabel);
         String debugValue = ConfigFile.get("settings", "debug", false);
         debug = new JCheckBox();
         debug.setSelected(debugValue != null && debugValue.trim().toLowerCase().equals("true"));
         panel.add(debug);
+
+        mainBranchesLabel = new JLabel("Main Branches:", JLabel.LEFT);
+        panel.add(mainBranchesLabel);
+        mainBranches = new JTextField();
+        String b = ConfigFile.get("settings", "main_branches", false);
+        if (b == null) b = "";
+        mainBranches.setText(b);
+        panel.add(mainBranches);
 
         init();
     }
@@ -85,9 +95,11 @@ public class Settings extends DialogWrapper {
     @Override
     public void doOKAction() {
         ConfigFile.setApiKey(apiKey.getText());
+        ConfigFile.setMainBranches(mainBranches.getText());
         ConfigFile.set("settings", "proxy", false, proxy.getText());
         ConfigFile.set("settings", "debug", false, debug.isSelected() ? "true" : "false");
         ConfigFile.set("settings", "status_bar_enabled", false, statusBar.isSelected() ? "true" : "false");
+        ConfigFile.set("settings", "main_branches", false, mainBranches.getText());
         WakaTime.setupDebugging();
         WakaTime.setupStatusBar();
         WakaTime.setLoggingLevel();
