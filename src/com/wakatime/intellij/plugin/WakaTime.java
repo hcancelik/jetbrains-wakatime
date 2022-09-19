@@ -255,6 +255,9 @@ public class WakaTime implements ApplicationComponent {
 
                 heartbeatsQueue.add(h);
 
+                log.warn("1######TEST###### " + h.entity);
+                log.warn("2######TEST###### " + getCurrentBranchName());
+
                 if (WakaTime.isBuilding) setBuildTimeout();
             }
         });
@@ -630,7 +633,7 @@ public class WakaTime implements ApplicationComponent {
         BrowserUtil.browse("https://wakatime.com/dashboard");
     }
 
-    private static String todayText = "initialized";
+    private static String todayText = "0:00";
     private static BigDecimal todayTextTime = new BigDecimal(0);
 
     public static String getStatusBarText() {
@@ -709,5 +712,13 @@ public class WakaTime implements ApplicationComponent {
     @NotNull
     public String getComponentName() {
         return "WakaTime";
+    }
+
+    public static String getCurrentBranchName() {
+        String branch = "";
+
+
+
+        return branch;
     }
 }
