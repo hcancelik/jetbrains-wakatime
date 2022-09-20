@@ -1,7 +1,7 @@
 <idea-plugin version="2" url="https://github.com/hcancelik/jetbrains-wakatime">
     <id>com.wakatime.intellij.plugin</id>
     <name>WakaTime+</name>
-    <version>14.1.1</version>
+    <version>14.1.0</version>
     <vendor email="celik@me.com" url="https://github.com/hcancelik/jetbrains-wakatime">WakaTime+</vendor>
 
     <description><![CDATA[
