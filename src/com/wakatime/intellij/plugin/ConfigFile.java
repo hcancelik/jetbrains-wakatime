@@ -8,6 +8,8 @@ Website:     https://wakatime.com/
 
 package com.wakatime.intellij.plugin;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -181,12 +183,18 @@ public class ConfigFile {
     public static String[] getMainBranches() {
         String branches = "";
 
+
+
         if (!ConfigFile._main_branches.equals("")) {
             branches = ConfigFile._api_key;
         } else {
             branches = get("settings", "main_branches", false);
         }
 
-        return branches.trim().split("\\s*,\\s*");
+        if (branches != null) {
+            return branches.trim().split("\\s*,\\s*");
+        }
+
+        return ArrayUtils.EMPTY_STRING_ARRAY;
     }
 }
