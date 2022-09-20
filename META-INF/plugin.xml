@@ -1,8 +1,8 @@
-<idea-plugin version="2" url="https://wakatime.com">
+<idea-plugin version="2" url="https://github.com/hcancelik/jetbrains-wakatime">
     <id>com.wakatime.intellij.plugin</id>
-    <name>WakaTime</name>
+    <name>WakaTime+</name>
     <version>14.1.1</version>
-    <vendor email="support@wakatime.com" url="https://wakatime.com">WakaTime</vendor>
+    <vendor email="celik@me.com" url="https://github.com/hcancelik/jetbrains-wakatime">WakaTime+</vendor>
 
     <description><![CDATA[
       Metrics, insights, and time tracking automatically generated from your programming activity.<br />
@@ -23,7 +23,7 @@
       <br />
       7. Visit https://wakatime.com to see your logged time.<br />
       <br />
-      Source Code:  <a href="https://github.com/wakatime/jetbrains-wakatime">https://github.com/wakatime/jetbrains-wakatime</a>
+      Source Code:  <a href="https://github.com/hcancelik/jetbrains-wakatime">https://github.com/hcancelik/jetbrains-wakatime</a>
     ]]></description>
 
     <change-notes><![CDATA[
@@ -891,7 +891,6 @@
          on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
-    <!-- <depends optional="true" config-file="com.wakatime.intellij.plugin-java.xml">com.intellij.modules.java</depends> -->
     <depends>Git4Idea</depends>
 
     <extensions defaultExtensionNs="com.intellij">
