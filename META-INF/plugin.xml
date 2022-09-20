@@ -892,6 +892,7 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
     <!-- <depends optional="true" config-file="com.wakatime.intellij.plugin-java.xml">com.intellij.modules.java</depends> -->
+    <depends>Git4Idea</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <statusBarWidgetFactory implementation="com.wakatime.intellij.plugin.CustomStatusBar"

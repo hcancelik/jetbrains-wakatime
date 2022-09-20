@@ -177,4 +177,16 @@ public class ConfigFile {
         set("settings", "main_branches", false, mainBranches);
         ConfigFile._main_branches = mainBranches;
     }
+
+    public static String[] getMainBranches() {
+        String branches = "";
+
+        if (!ConfigFile._main_branches.equals("")) {
+            branches = ConfigFile._api_key;
+        } else {
+            branches = get("settings", "main_branches", false);
+        }
+
+        return branches.trim().split("\\s*,\\s*");
+    }
 }

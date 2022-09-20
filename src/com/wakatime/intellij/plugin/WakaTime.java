@@ -41,6 +41,8 @@ import com.intellij.util.net.HttpConfigurable;
 import org.apache.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import git4idea.repo.GitRepository;
+import git4idea.repo.GitRepositoryManager;
 
 import java.awt.KeyboardFocusManager;
 import java.io.*;
@@ -48,6 +50,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.*;
+import java.util.List;
 
 public class WakaTime implements ApplicationComponent {
 
@@ -71,6 +74,8 @@ public class WakaTime implements ApplicationComponent {
     private static ConcurrentLinkedQueue<Heartbeat> heartbeatsQueue = new ConcurrentLinkedQueue<Heartbeat>();
     private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static ScheduledFuture<?> scheduledFixture;
+
+    private static Integer checkCount = 0;
 
     public WakaTime() {
     }
@@ -227,6 +232,8 @@ public class WakaTime implements ApplicationComponent {
 
         final BigDecimal time = WakaTime.getCurrentTimestamp();
 
+        checkForMainBranch(project);
+
         if (!isWrite && file.getPath().equals(WakaTime.lastFile) && !enoughTimePassed(time)) {
             return;
         }
@@ -254,9 +261,6 @@ public class WakaTime implements ApplicationComponent {
                 }
 
                 heartbeatsQueue.add(h);
-
-                log.warn("1######TEST###### " + h.entity);
-                log.warn("2######TEST###### " + getCurrentBranchName());
 
                 if (WakaTime.isBuilding) setBuildTimeout();
             }
@@ -714,11 +718,31 @@ public class WakaTime implements ApplicationComponent {
         return "WakaTime";
     }
 
-    public static String getCurrentBranchName() {
+    public static String getCurrentBranchName(Project project) {
         String branch = "";
 
+        if (project != null) {
+            List<GitRepository> repos = git4idea.repo.GitRepositoryManager.getInstance(project).getRepositories();
 
+            if (!repos.isEmpty()) {
+                branch = repos.get(0).getCurrentBranchName();
+            }
+        }
 
         return branch;
+    }
+
+    public static void checkForMainBranch(Project project) {
+        String branchName = getCurrentBranchName(project);
+
+        if (Arrays.asList(ConfigFile.getMainBranches()).contains(branchName)) {
+            checkCount++;
+        } else {
+            checkCount = 0;
+        }
+
+        if (checkCount > 0 && checkCount % 100 == 0) {
+            Messages.showWarningDialog("It looks like you're working on " + branchName + " branch. Please checkout out to issue branch ASAP!", "Error");
+        }
     }
 }
