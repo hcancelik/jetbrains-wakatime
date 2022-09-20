@@ -183,8 +183,6 @@ public class ConfigFile {
     public static String[] getMainBranches() {
         String branches = "";
 
-
-
         if (!ConfigFile._main_branches.equals("")) {
             branches = ConfigFile._api_key;
         } else {
