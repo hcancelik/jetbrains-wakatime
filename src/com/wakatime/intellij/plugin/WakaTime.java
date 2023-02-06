@@ -744,7 +744,7 @@ public class WakaTime implements ApplicationComponent {
         WakaTime.log.info("###### CHECK COUNT: " + checkCount);
         WakaTime.log.info("###### CURRENT BRANCH: " + branchName);
 
-        if (checkCount > 0 && checkCount % 100 == 0) {
+        if (checkCount > 0 && checkCount % 1000 == 0) {
             ApplicationManager.getApplication().invokeLater(new Runnable(){
                 public void run() {
                     Messages.showWarningDialog("It looks like you're working on " + branchName + " branch. Please checkout out to issue branch ASAP!", "Error");
